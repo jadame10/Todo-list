@@ -1,38 +1,59 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  margin-top: 30px;
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a:visited, a:link{
+  text-decoration: none;
+  color: navajowhite;
+}
+table td{
+  padding: 9px;
+  font-size: 19px;
+  border: 1px solid rgba(53, 160, 99, 0.2);
+  background-color: rgb(47, 48, 49);
+  color: navajowhite;
+}
+.btn0, .btn1{
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 10px !important;
+}
+.btn3{
+  margin: 5px;
+  margin-bottom: 75px;
+}
+.inpt0{
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.inpt1{
+  width: 25px;
+  height: 25px;
+}
+.inpt2{
+  height: 30px;
+  margin: 5px;
+}
+.list0 li a:link, .list0 li a:visited,.list0 li{
+  text-decoration: none;
+  list-style-type: none;
+  color: darkslategray !important;
+  font-size: 18px;
+}
+.l0{
+  color:darkslategray !important;
 }
