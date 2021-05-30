@@ -46,7 +46,8 @@ table td{
 }
 .inpt2{
   height: 30px;
-  margin: 5px;
+  margin: 10px;
+  width: 230px;
 }
 .list0 li a:link, .list0 li a:visited,.list0 li{
   text-decoration: none;
@@ -56,4 +57,11 @@ table td{
 }
 .l0{
   color:darkslategray !important;
+}
+.counters p{
+  float: left;
+  margin-left: 15px;
+}
+.btn{
+  cursor: pointer;
 }

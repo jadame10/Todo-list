@@ -1,6 +1,6 @@
 import './App.css';
 import { Link} from 'react-router-dom';
-import React, { useState,  useCallback } from 'react';
+import React, { useState,  useCallback, useEffect} from 'react';
 import Buttonn from './Button';
 import Search from  './Search';
 import { useRecoilState } from 'recoil';
@@ -8,21 +8,23 @@ import { user as userAtom } from "./atoms";
 import { us as usAtom } from "./atoms";
 import {counterT as counterTAtom} from './atoms';
 import {counterF as counterFAtom} from './atoms';
-import { search as searchAtom } from "./atoms";
-import {  Button} from 'theme-ui';
+import {search as searchAtom } from "./atoms";
+import {Button} from 'theme-ui';
+import { index as indexAtom } from "./atoms";
+import {ee as eeAtom} from './atoms';
 
 const App = () =>{
-
 
   const [newItem, setNewItem] = useState('');
   const [users, setUsers] = useRecoilState(userAtom);
   const [user, setUser] = useRecoilState(usAtom);
-  const [counterT, setCounterT] = useRecoilState(counterTAtom);
-  const [counterF, setCounterF] = useRecoilState(counterFAtom);
+  let [counterT, setCounterT] = useRecoilState(counterTAtom);
+  let [counterF, setCounterF] = useRecoilState(counterFAtom);
   const [search, setSearch] = useRecoilState(searchAtom);
+  const [index, setIndex] = useRecoilState(indexAtom);
+  const [ee, setEE] = useRecoilState(eeAtom);
 
-
-const fetchRequest = useCallback(() => {
+  const fetchRequest = useCallback(() => {
   fetch('https://gorest.co.in/public-api/todos')
   .then(results => results.json())
   .then(data => {
@@ -40,11 +42,12 @@ const updateNewText = (event)=> {
 const createNew = () =>{
   if(users){
   setUsers(users.concat({
-  id:  Math.floor(Math.random() * (200 - 144 + 1)) + 144, title: newItem, completed: false, created_at:
+  id:  Math.floor(Math.random() * (400 - 144 + 1)) + 144, title: newItem, completed: false, created_at:
    `${new Date().toLocaleDateString()}`
   }))
   setSearch(search.concat({title: newItem}));
  }
+  setCounterF(counterF += 1);  
  }
 
  const addDelete = (i,j) => { 
@@ -65,8 +68,10 @@ setCounterT(newState.filter(o => o.completed === true).length);
 setCounterF(newState.filter(o => o.completed === false).length);
 }
 
-const addVar = (item) => {
+const addVar = (item, i) => {
 setUser(item);
+setIndex(item.id);
+setEE(i);
 }
 
  
@@ -74,12 +79,16 @@ setUser(item);
     <div className="App">
       <header className="App-header">
       <Search />
-        <div className = 'counters'> <p>Liczba zadań zakończonych: {counterT}</p>
-        <p>Liczba zadań niezakończonych: {counterF}</p></div>
+        <div className = 'counters'> 
+        <p>Liczba zadań zakończonych: {counterT}</p>
+        <p>Liczba zadań niezakończonych: {counterF}</p>
+        </div>
+        <br />
       <div className = 'btns'>
       <Button type = 'submit' variant='primary' className ='btn0' onClick = {fetchRequest}>Wgraj Dane</Button>
       <Buttonn />
       </div>
+      <br />
       <table>
           <thead>
             <tr>
@@ -89,16 +98,14 @@ setUser(item);
             </tr>
           </thead>
           <tbody>
-    
           { users && users.map((item, i) =>
-                  
                   <tr key = {item.id}>
                   <td>
                     {item.id}
                 
                     </td>
                      <td>
-                     <Link onClick = {(j) => { addVar(item)}} to ='/item'  > {item.title}</Link>
+                     <Link onClick = {(j) => { addVar(item, i)}} to ='/item'> {item.title}</Link>
                     </td>
                     <td>
                     
@@ -109,11 +116,8 @@ setUser(item);
                     <td>
                     <Button type = 'submit' variant='secondary' className ='btn btn-warning' onClick= {addDelete.bind(null, i)}>Ukryj</Button>
                     </td>
-                  
                 </tr>
-      
                 )}
-              
           </tbody>
         </table>
         <input className = 'inpt2' onChange = {updateNewText} />

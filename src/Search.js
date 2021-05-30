@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState} from "recoil";
 import { ee as eAtom } from "./atoms";
+import { user as viewAtom } from "./atoms";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import SearchR from './searchR';
 import { search as searchAtom } from "./atoms";
@@ -15,6 +16,7 @@ function Search() {
     const [search, setSearch] = useRecoilState(searchAtom);
     const [loading, setloading] = useState(false);
     const [index, setIndex] = useRecoilState(indexAtom);
+    const [users, setUsers] = useRecoilState(viewAtom);
 
     const handleChange = event => {
         event.preventDefault();
@@ -23,20 +25,12 @@ function Search() {
       };
 
       const loadingS = () => {
-        setloading(true)
+        setloading(true);
+        setSearch(users.filter(person =>
+          person.title.toLowerCase().includes(e)
+        ));
       };
 
-      useEffect(() => {
-       
-        fetch('https://gorest.co.in/public-api/todos')
-        .then(results => results.json())
-        .then(data => {
-          setSearch(data.data.filter(person =>
-            person.title.toLowerCase().includes(e)
-          ));
-        });
-      
-      }, [search]);
 
       const addVar = (item, i) => {
         console.log(item[i])
@@ -49,8 +43,7 @@ function Search() {
         <div>
          <input
         type="text"
-        placeholder="Szukaj tytułu"
-        value={e}
+        placeholder="Szukaj"
         onChange={handleChange}
         className ='inpt0'
       />

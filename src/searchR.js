@@ -4,17 +4,17 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import App from './App';
 import { search as searchAtom } from "./atoms";
 import { index as indexAtom } from "./atoms";
+import { user as viewAtom } from "./atoms";
 
 function SearchR() {
 
     const [search, setSearch] = useRecoilState(searchAtom);
     const [index, setIndex] = useRecoilState(indexAtom);
-    console.log(index);
+    const [users, setUsers] = useRecoilState(viewAtom);
+
     return (
 
         <div className="App">
-            {console.log(search)}
-            {console.log(index)}
         <header className="App-header">
         <table>
             <thead>
